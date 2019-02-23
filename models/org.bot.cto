@@ -76,27 +76,26 @@ asset WalletAccount identified by AccountNumber {
   o String AccountNumber
   o Long accountBalance default=0
   o DateTime dateOpened
-  --> VehicleOwner owner
+  --> Vehicle vehicle
 }
 
-transaction registerVehicleOwner {
+transaction RegisterVehicleOwner {
   o String identityId
   o Profile profile
 }
 
-transaction registerVehicle {
+transaction RegisterVehicle {
   o String licensePlate
   o VehicleInfo info
   --> VehicleOwner[] owner
 }
 
-transaction payIn {
+transaction PayIn {
   --> WalletAccount account
   o Long ammount
 }
 
-transaction payToll {
+transaction PayToll {
   --> Vehicle vehicle
-  --> VehicleOwner payer
   o Integer gateway
 }
