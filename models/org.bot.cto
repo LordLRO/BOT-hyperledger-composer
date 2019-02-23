@@ -1,0 +1,102 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Write your model definitions here
+ */
+
+namespace org.bot
+
+enum VehicleType {
+  o Type1
+  o Type2
+  o Type3
+  o Type4
+  o Type5
+}
+
+concept Address {
+  o String street
+  o String district
+  o String city default="Ha Noi"
+  o String zipcode optional
+}
+
+concept Profile {
+  o String name 
+  o String phoneNumber
+  o String email default="example@mail.org"
+  o Address address
+}
+
+concept VehicleInfo {
+  o String model
+  o DateTime dateRegistered default="2018-1-1"
+  o DateTime dateProduced default="2017-1-1"
+}
+
+participant Vehicle identified by licensePlate {
+  o String licensePlate
+  o VehicleInfo info
+  --> VehicleOwner[] owner
+}
+
+participant VehicleOwner identified by identityId {
+  o String identityId
+  o Profile profile
+}
+
+abstract participant SystemAdmin identified by adminId {
+  o String adminId
+}
+
+participant Investor extends SystemAdmin {
+  o String investorId 
+  o Profile profile
+  o String taxIdentificationNumber
+}
+
+participant Government extends SystemAdmin {
+  o String departmentId
+  o String departmentName
+}
+
+asset WalletAccount identified by AccountNumber {
+  o String AccountNumber
+  o Long accountBalance default=0
+  o DateTime dateOpened
+  --> VehicleOwner owner
+}
+
+transaction registerVehicleOwner {
+  o String identityId
+  o Profile profile
+}
+
+transaction registerVehicle {
+  o String licensePlate
+  o VehicleInfo info
+  --> VehicleOwner[] owner
+}
+
+transaction payIn {
+  --> WalletAccount account
+  o Long ammount
+}
+
+transaction payToll {
+  --> Vehicle vehicle
+  --> VehicleOwner payer
+  o Integer gateway
+}
