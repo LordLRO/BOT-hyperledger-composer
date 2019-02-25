@@ -42,6 +42,7 @@ concept Profile {
 
 concept VehicleInfo {
   o String model
+  o Integer vehicleType // [1, 5]
   o DateTime dateRegistered default="2018-1-1"
   o DateTime dateProduced default="2017-1-1"
 }
@@ -49,7 +50,7 @@ concept VehicleInfo {
 participant Vehicle identified by licensePlate {
   o String licensePlate
   o VehicleInfo info
-  --> VehicleOwner[] owner
+  --> VehicleOwner[] owners
 }
 
 participant VehicleOwner identified by identityId {
@@ -87,7 +88,7 @@ transaction RegisterVehicleOwner {
 transaction RegisterVehicle {
   o String licensePlate
   o VehicleInfo info
-  --> VehicleOwner[] owner
+  --> VehicleOwner[] owners
 }
 
 transaction PayIn {
@@ -96,6 +97,6 @@ transaction PayIn {
 }
 
 transaction PayToll {
-  --> Vehicle vehicle
-  o Integer gateway
+  --> WalletAccount account
+  // o Integer gateway
 }
