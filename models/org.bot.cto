@@ -58,6 +58,10 @@ participant VehicleOwner identified by identityId {
   o Profile profile
 }
 
+participant BotStaff identified by staffId {
+  o String staffId
+}
+
 abstract participant SystemAdmin identified by adminId {
   o String adminId
 }

@@ -63,6 +63,22 @@ rule R2_EnablePayInTxnExtend {
     action: ALLOW
 }
 
+rule R2_EnablePayInTxnStaff {
+    description: "Enable Traders to submit transactions"
+    participant: "org.bot.BotStaff"
+    operation: ALL
+    resource: "org.bot.PayIn"
+    action: ALLOW
+}
+
+rule R2_EnablePayInTxnExtendStaff {
+    description: "Enable Traders to submit transactions"
+    participant: "org.bot.BotStaff"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.TransactionRegistry#org.bot.PayIn"
+    action: ALLOW
+}
+
 rule R2_EnablePayTollTxn {
     description: "Enable Traders to submit transactions"
     participant: "org.bot.VehicleOwner"
