@@ -1,0 +1,22 @@
+query getWalletAccount {
+  description: "Description of the Basic Query"
+  statement: 
+    SELECT org.bot.WalletAccount
+}
+
+query getPaidInHistorian {
+  description: "transactions historian"
+  statement:
+    SELECT org.hyperledger.composer.system.HistorianRecord
+    WHERE ((transactionType == 'org.bot.PaidIn'))
+}
+
+query getPaidTollHistorian {
+  description: "transactions historian"
+  statement:
+    SELECT org.hyperledger.composer.system.HistorianRecord
+    WHERE ((transactionType == 'org.bot.PaidToll'))
+}
+
+
+

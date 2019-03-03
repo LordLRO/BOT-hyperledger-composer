@@ -37,10 +37,10 @@ rule R1b_OwnerSeeRecords {
 }
 
 rule R1b_OwnerSeeTheirVehicles {
-  description: "Trader can see with their own Vehicles"
+  description: "User can see with their own Vehicles Account"
   participant(t): "org.bot.VehicleOwner"
   operation: ALL
-  resource(c): "org.bot.Vehicle"
+  resource(c): "org.bot.WalletAccount"
   condition: (c.owners.some(function(owner){
     return owner.getIdentifier() == t.getIdentifier()
   }))
@@ -48,7 +48,7 @@ rule R1b_OwnerSeeTheirVehicles {
 }
 
 rule R2_EnablePayInTxn {
-    description: "Enable Traders to submit transactions"
+    description: "Enable Users to submit transactions"
     participant: "org.bot.VehicleOwner"
     operation: ALL
     resource: "org.bot.PayIn"
@@ -56,7 +56,7 @@ rule R2_EnablePayInTxn {
 }
 
 rule R2_EnablePayInTxnExtend {
-    description: "Enable Traders to submit transactions"
+    description: "Enable Users to submit transactions"
     participant: "org.bot.VehicleOwner"
     operation: ALL
     resource: "org.hyperledger.composer.system.TransactionRegistry#org.bot.PayIn"
@@ -64,7 +64,7 @@ rule R2_EnablePayInTxnExtend {
 }
 
 rule R2_EnablePayInTxnStaff {
-    description: "Enable Traders to submit transactions"
+    description: "Enable Users to submit transactions"
     participant: "org.bot.BotStaff"
     operation: ALL
     resource: "org.bot.PayIn"
@@ -72,7 +72,7 @@ rule R2_EnablePayInTxnStaff {
 }
 
 rule R2_EnablePayInTxnExtendStaff {
-    description: "Enable Traders to submit transactions"
+    description: "Enable Users to submit transactions"
     participant: "org.bot.BotStaff"
     operation: ALL
     resource: "org.hyperledger.composer.system.TransactionRegistry#org.bot.PayIn"
@@ -80,39 +80,39 @@ rule R2_EnablePayInTxnExtendStaff {
 }
 
 rule R2_EnablePayTollTxn {
-    description: "Enable Traders to submit transactions"
+    description: "Enable Users to submit transactions"
     participant: "org.bot.VehicleOwner"
     operation: ALL
     resource: "org.bot.PayToll"
     action: ALLOW
 }
 
-rule R2_EnablePayInTollExtend {
-    description: "Enable Traders to submit transactions"
+rule R2_EnablePayTollExtend {
+    description: "Enable Users to submit transactions"
     participant: "org.bot.VehicleOwner"
     operation: ALL
     resource: "org.hyperledger.composer.system.TransactionRegistry#org.bot.PayToll"
     action: ALLOW
 }
 
-rule R2_EnableRegisterVehicleTxn {
-    description: "Enable Traders to submit transactions"
+rule R2_EnableregisterWalletAccountTxn {
+    description: "Enable Users to submit transactions"
     participant: "org.bot.VehicleOwner"
     operation: ALL
-    resource: "org.bot.RegisterVehicle"
+    resource: "org.bot.registerWalletAccount"
     action: ALLOW
 }
 
-rule R2_EnableRegisterVehicleExtend {
-    description: "Enable Traders to submit transactions"
+rule R2_EnableregisterWalletAccountExtend {
+    description: "Enable Users to submit transactions"
     participant: "org.bot.VehicleOwner"
     operation: ALL
-    resource: "org.hyperledger.composer.system.TransactionRegistry#org.bot.RegisterVehicle"
+    resource: "org.hyperledger.composer.system.TransactionRegistry#org.bot.registerWalletAccount"
     action: ALLOW
 }
 
 rule R2_EnableTxnAssetRegisty {
-    description: "Enable Traders to submit transactions"
+    description: "Enable Users to submit transactions"
     participant: "org.bot.VehicleOwner"
     operation: ALL
     resource: "org.hyperledger.composer.system.AssetRegistry"
@@ -120,7 +120,7 @@ rule R2_EnableTxnAssetRegisty {
 }
 
 rule R2_EnableTxnParticipantRegisty {
-    description: "Enable Traders to submit transactions"
+    description: "Enable Users to submit transactions"
     participant: "org.bot.VehicleOwner"
     operation: ALL
     resource: "org.hyperledger.composer.system.ParticipantRegistry"
@@ -128,28 +128,28 @@ rule R2_EnableTxnParticipantRegisty {
 }
 
 rule R2_EnableRecord {
-    description: "Enable Traders to submit transactions"
+    description: "Enable Users to submit transactions"
     participant: "org.bot.VehicleOwner"
     operation: ALL
     resource: "org.hyperledger.composer.system.HistorianRecord"
     action: ALLOW
 }
 
-rule R2_AccessWalletAccount {
-    description: "Enable Traders to submit transactions"
-    participant(t): "org.bot.VehicleOwner"
-    operation: ALL
-    resource(c): "org.bot.WalletAccount"
-    condition: (
-      c.vehicle.owners.some(function(owner){
-        return owner.getIdentifier() == t.getIdentifier()
-      })
-    )
-    action: ALLOW
-}
+// rule R2_AccessWalletAccount {
+//     description: "Enable Users to submit transactions"
+//     participant(t): "org.bot.VehicleOwner"
+//     operation: ALL
+//     resource(c): "org.bot.WalletAccount"
+//     condition: (
+//       c.vehicle.owners.some(function(owner){
+//         return owner.getIdentifier() == t.getIdentifier()
+//       })
+//     )
+//     action: ALLOW
+// }
 
 rule R3_UserSeeOwnHistoryOnly {
-  description: "Traders should be able to see the history of their own transactions only"
+  description: "Users should be able to see the history of their own transactions only"
   participant(t): "org.bot.VehicleOwner"
   operation: ALL
   resource(v): "org.hyperledger.composer.system.HistorianRecord"

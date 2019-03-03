@@ -47,12 +47,6 @@ concept VehicleInfo {
   o DateTime dateProduced default="2017-1-1"
 }
 
-participant Vehicle identified by licensePlate {
-  o String licensePlate
-  o VehicleInfo info
-  --> VehicleOwner[] owners
-}
-
 participant VehicleOwner identified by identityId {
   o String identityId
   o Profile profile
@@ -77,11 +71,11 @@ participant Government extends SystemAdmin {
   o String departmentName
 }
 
-asset WalletAccount identified by AccountNumber {
-  o String AccountNumber
+asset WalletAccount identified by licensePlate {
+  o String licensePlate
+  o VehicleInfo info
   o Long accountBalance default=0
-  o DateTime dateOpened
-  --> Vehicle vehicle
+  --> VehicleOwner[] owners
 }
 
 transaction RegisterVehicleOwner {
@@ -89,7 +83,7 @@ transaction RegisterVehicleOwner {
   o Profile profile
 }
 
-transaction RegisterVehicle {
+transaction registerWalletAccount {
   o String licensePlate
   o VehicleInfo info
   --> VehicleOwner[] owners
@@ -103,4 +97,14 @@ transaction PayIn {
 transaction PayToll {
   --> WalletAccount account
   // o Integer gateway
+}
+
+event PaidIn {
+  --> WalletAccount account
+  o Long ammount
+}
+
+event PaidToll {
+  --> WalletAccount account
+  o Long ammount
 }
