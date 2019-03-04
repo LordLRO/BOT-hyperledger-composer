@@ -28,11 +28,27 @@ rule R2_UserCanSeeDeploy {
   action: ALLOW
 }
 
+rule R2_BotStaffCanSeeDeploy {
+  description: "Staff can see deploy"
+  participant: "org.bot.BotStaff"
+  operation: READ, UPDATE
+  resource: "org.hyperledger.composer.system.Network"
+  action: ALLOW
+}
+
 rule R1b_OwnerSeeRecords {
   description: "Owner can see records"
   participant: "org.bot.VehicleOwner"
   operation: ALL
   resource: "org.hyperledger.composer.system.ParticipantRegistry#org.hyperledger.composer.system.HistorianRecord"
+  action: ALLOW
+}
+
+rule R1b_StaffSeeRegistryRecords {
+  description: "Owner can see records"
+  participant: "org.bot.BotStaff"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.AssetRegistry#org.hyperledger.composer.system.HistorianRecord"
   action: ALLOW
 }
 
@@ -67,7 +83,7 @@ rule R2_EnablePayInTxnStaff {
     description: "Enable Users to submit transactions"
     participant: "org.bot.BotStaff"
     operation: ALL
-    resource: "org.bot.PayIn"
+    resource: "org.bot.BotStaffPayIn"
     action: ALLOW
 }
 
@@ -75,7 +91,15 @@ rule R2_EnablePayInTxnExtendStaff {
     description: "Enable Users to submit transactions"
     participant: "org.bot.BotStaff"
     operation: ALL
-    resource: "org.hyperledger.composer.system.TransactionRegistry#org.bot.PayIn"
+    resource: "org.hyperledger.composer.system.TransactionRegistry#org.bot.BotStaffPayIn"
+    action: ALLOW
+}
+
+rule EnableStaffAccessAsset {
+  description: "Enable Users to submit transactions"
+    participant: "org.bot.BotStaff"
+    operation: READ, UPDATE
+    resource: "org.bot.WalletAccount"
     action: ALLOW
 }
 
@@ -119,6 +143,14 @@ rule R2_EnableTxnAssetRegisty {
     action: ALLOW
 }
 
+rule R2_EnableTxnAssetRegisty2 {
+    description: "Enable Users to submit transactions"
+    participant: "org.bot.BotStaff"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.AssetRegistry"
+    action: ALLOW
+}
+
 rule R2_EnableTxnParticipantRegisty {
     description: "Enable Users to submit transactions"
     participant: "org.bot.VehicleOwner"
@@ -127,9 +159,17 @@ rule R2_EnableTxnParticipantRegisty {
     action: ALLOW
 }
 
-rule R2_EnableRecord {
+rule R2_EnableOwnerRecord {
     description: "Enable Users to submit transactions"
     participant: "org.bot.VehicleOwner"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.HistorianRecord"
+    action: ALLOW
+}
+
+rule R2_EnableStaffRecord {
+    description: "Enable Users to submit transactions"
+    participant: "org.bot.BotStaff"
     operation: ALL
     resource: "org.hyperledger.composer.system.HistorianRecord"
     action: ALLOW

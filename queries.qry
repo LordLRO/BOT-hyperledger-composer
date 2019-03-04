@@ -18,5 +18,12 @@ query getPaidTollHistorian {
     WHERE ((transactionType == 'org.bot.PaidToll'))
 }
 
-
+query getStaffPaidInHistorian {
+  description: "staff transactions historian"
+  statement: 
+    SELECT org.hyperledger.composer.system.HistorianRecord
+    WHERE (
+      (participantInvoking == _$participantInvoking) 
+      AND (transactionType == 'org.bot.BotStaffPayIn') )
+}
 

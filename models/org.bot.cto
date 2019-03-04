@@ -54,6 +54,7 @@ participant VehicleOwner identified by identityId {
 
 participant BotStaff identified by staffId {
   o String staffId
+  o Profile profile
 }
 
 abstract participant SystemAdmin identified by adminId {
@@ -97,6 +98,11 @@ transaction PayIn {
 transaction PayToll {
   --> WalletAccount account
   // o Integer gateway
+}
+
+transaction BotStaffPayIn {
+  --> WalletAccount account
+  o Long ammount
 }
 
 event PaidIn {
